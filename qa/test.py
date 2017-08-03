@@ -6,10 +6,10 @@ import urllib2
 
 def wait_for_container_to_be_up(name,count):
 
-    command = "docker ps -qf \"name=%s\"" % name
+    check_command = "docker ps -qf \"name=%s\"" % name
 
-    while len(subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout.read().split("\n"))!=count+1:
-        print "Checking for a pulse with: %s" % command
+    while len(subprocess.Popen(check_command, shell=True, stdout=subprocess.PIPE).stdout.read().split("\n"))!=count+1:
+        print "Checking for a pulse with: %s" % check_command
         time.sleep(1)
 
     print "%s is up" % name
@@ -19,7 +19,7 @@ wait_for_container_to_be_up("da-rabbitmq-server",1)
 wait_for_container_to_be_up("sender",1)
 wait_for_container_to_be_up("worker*",3)
 
-print "Wait for sprint to boot (30 secs)"
+print "Wait for spring to boot (30 secs)"
 time.sleep(30)
 
 print "Send the message"
@@ -37,7 +37,6 @@ for i in [1, 2, 3]:
     command = tail_log_command_template % i
     print "Getting container logs with: %s" % command
     worker_log = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout.read().split("\n")
-    # print worker_log
     received = filter(lambda line: line.startswith('Received'), worker_log)
     print received
     messages_count=len(received)
