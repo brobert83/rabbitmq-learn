@@ -1,0 +1,27 @@
+version: "3"
+services:
+
+  sender:
+    image: rabbitmq-sender
+    ports:
+      - "1250:8080"
+
+  worker1:
+    image: rabbitmq-worker
+
+  worker2:
+    image: rabbitmq-worker
+
+  worker3:
+    image: rabbitmq-worker
+
+  da-rabbitmq-server:
+    image: "rabbitmq:3.6.3"
+    ports:
+      - "1261:15672" #management   user,pass -> guest,guest
+      - "1262:5672"
+    hostname: "da-rabbit"
+    labels:
+      NAME: "da-rabbit"
+    volumes:
+      - "./rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins"
