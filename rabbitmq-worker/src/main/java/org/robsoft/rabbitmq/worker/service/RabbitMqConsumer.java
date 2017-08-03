@@ -10,7 +10,7 @@ public class RabbitMqConsumer {
     public void receiveMessage(
             @Payload String message) {
 
-        System.out.println( "Received -> " + message);
+        System.out.println("Received: " + message);
     }
 
 }

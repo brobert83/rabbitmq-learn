@@ -19,8 +19,8 @@ public class Rest {
     public String sendMessage(
             @RequestParam String message) {
 
-        for (int i = 0; i < 10; i++) {
-            rabbitMqSender.sendMessage(i + " " + message);
+        for (int i = 1; i <= 10; i++) {
+            rabbitMqSender.sendMessage(message + " " + i);
         }
 
         return "Sent " + message;
